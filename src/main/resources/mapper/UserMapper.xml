@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myshop.mapper.UserMapper">
+
+    <select id="selectByUsername" resultType="com.myshop.entity.User">
+        select * from user where username = #{username}
+    </select>
+
+    <select id="selectAll"   resultType="com.myshop.entity.User">
+        select * from user
+        <where>
+            <if test="username != null">and username = #{username}</if>
+        </where>
+        order by id ASC
+    </select>
+
+    <select id="selectById" resultType="com.myshop.entity.User">
+        select * from user where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.myshop.entity.User" useGeneratedKeys="true">
+        <!-- useGeneratedKeys="true"表示令 MyBatis 使用 JDBC 的 getGeneratedKeys 方法来取出由数据库内部生成的主键 -->
+        insert into user
+        <!-- 动态 SQL 语句，根据 User 对象的属性值是否为空来决定是否拼接 SQL 语句 -->
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <!-- prefix="(" suffix=")" suffixOverrides="," 表示在拼接 SQL 语句时，如果最后一个字符是逗号，就去掉逗号 -->
+            <if test="id != null">id,</if>
+            <if test="username != null">username,</if>
+            <if test="password != null">password,</if>
+            <if test="name != null">name,</if>
+            <if test="role != null">role,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="email != null">email,</if>
+            <if test="phone != null">phone,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <!-- prefix="values (" suffix=")" suffixOverrides="," 表示在拼接 SQL 语句时，如果最后一个字符是逗号，就去掉逗号 -->
+            <if test="id != null">#{id},</if>
+            <if test="username != null">#{username},</if>
+            <if test="password != null">#{password},</if>
+            <if test="name != null">#{name},</if>
+            <if test="role != null">#{role},</if>
+            <if test="avatar != null">#{avatar},</if>
+            <if test="email != null">#{email},</if>
+            <if test="phone != null">#{phone},</if>
+        </trim>
+    </insert>
+
+    <delete id="deleteById">
+        delete from user where id = #{id}
+    </delete>
+
+    <update id="updateById" parameterType="com.myshop.entity.User">
+        update user
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="role != null">role = #{role},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="phone != null">phone = #{phone},</if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myshop.mapper.CarouselMapper">
+
+    <select id="selectAll" resultType="com.myshop.entity.Carousel">
+        select carousel.*, goods.name as goodsName from carousel
+        left join goods on carousel.goods_id = goods.id
+        <where>
+            <if test="goodsName != null">and goods.name like concat('%', #{goodsName}, '%') </if>
+        </where>
+        order by carousel.id desc
+    </select>
+
+    <select id="selectById" resultType="com.myshop.entity.Carousel">
+        select * from carousel where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.myshop.entity.Carousel" useGeneratedKeys="true" keyProperty="id">
+        insert into carousel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="goodsId != null">goods_id,</if>
+            <if test="img != null">img,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="goodsId != null">#{goodsId},</if>
+            <if test="img != null">#{img},</if>
+        </trim>
+    </insert>
+
+    <delete id="deleteById">
+        delete from carousel where id = #{id}
+    </delete>
+
+    <update id="updateById" parameterType="com.myshop.entity.Carousel">
+        update carousel
+        <set>
+            <if test="goodsId != null">
+                goods_id = #{goodsId},
+            </if>
+            <if test="img != null">
+                img = #{img},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
