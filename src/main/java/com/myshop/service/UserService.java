@@ -11,6 +11,7 @@ import com.myshop.common.exception.CustomException;
 import com.myshop.common.system.AsyncTaskFactory;
 import com.myshop.entity.User;
 import com.myshop.mapper.UserMapper;
+import com.myshop.utils.RedisUtils;
 import com.myshop.utils.SaUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,21 @@ public class UserService {
      * 登录
      */
     public User login(User user) {
-        String username = user.getUsername();
+
+        String uuid = user.getUuid();//验证码的uuid
+        String captchaKey = Constants.REDIS_KEY_CAPTCHA + uuid;//验证码的key
+        String username = user.getUsername();//用户名
+        String captchaCode = RedisUtils.getCacheObject(captchaKey);//从redis中获取验证码
+        if (captchaCode == null) {
+            throw new CustomException("验证码已失效");
+        }
+        if (!user.getCode().equals(captchaCode)) {
+            throw new CustomException("验证码错误");
+        }
+        // 验证完成后删除redis缓存
+        RedisUtils.deleteObject(captchaKey);
+
+
         // 从数据库查询的数据不一定是非null的，如果是null那么就会报 NULLPOINTEXCEPTION
         User dbUser = userMapper.selectByUsername(username);
         if (dbUser == null) {
