@@ -105,6 +105,20 @@
 			<version>2.3.2</version>
 		</dependency>
 
+		<!-- rate-limit -->
+		<dependency>
+			<groupId>com.revinate</groupId>
+			<artifactId>guava-rate-limiter</artifactId>
+			<version>19.0</version>
+		</dependency>
+
+		<!-- 支付宝沙箱支付 -->
+		<dependency>
+			<groupId>com.alipay.sdk</groupId>
+			<artifactId>alipay-sdk-java</artifactId>
+			<version>4.35.79.ALL</version>
+		</dependency>
+
 
 	</dependencies>
 

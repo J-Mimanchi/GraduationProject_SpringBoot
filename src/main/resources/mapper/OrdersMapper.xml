@@ -62,6 +62,10 @@
         </trim>
     </insert>
 
+    <delete id = "deleteById">
+        delete from orders where id = #{id}
+    </delete>
+
     <update id="updateById" parameterType="com.myshop.entity.Orders">
         update orders
         <set>

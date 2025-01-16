@@ -1,4 +1,4 @@
-package com.myshop.common.exception;
+package com.myshop.exception;
 
 import com.myshop.common.enums.ResultCodeEnum;
 import lombok.Data;

@@ -16,7 +16,7 @@ public interface Constants {
     int CAPTCHA_EXPIRE_MINUTES = 1;
 
     /**
-     * 秒杀名额
+     * 秒杀限额 10
      */
     Integer FLASH_LIMIT_NUM = 10;
 

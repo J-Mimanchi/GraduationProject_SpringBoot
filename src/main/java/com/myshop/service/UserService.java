@@ -7,7 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.myshop.common.Constants;
 import com.myshop.common.enums.LogModuleEnum;
 import com.myshop.common.enums.RoleEnum;
-import com.myshop.common.exception.CustomException;
+import com.myshop.exception.CustomException;
 import com.myshop.common.system.AsyncTaskFactory;
 import com.myshop.entity.User;
 import com.myshop.mapper.UserMapper;

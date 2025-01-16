@@ -77,9 +77,13 @@ public class GoodsService {
         return PageInfo.of(list);
     }
 
+    /**
+     * 查询秒杀商品(限量查询两个)
+     */
     public List<Goods> selectFlash(Goods goods) throws ParseException {
         List<Goods> list = goodsMapper.selectAll(goods);
         extracted(list);
+        // 只返回前两个
         return list.size() > 2 ? list.subList(0, 2) : list;
     }
 

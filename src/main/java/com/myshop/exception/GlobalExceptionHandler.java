@@ -1,4 +1,4 @@
-package com.myshop.common.exception;
+package com.myshop.exception;
 
 import cn.dev33.satoken.exception.SaTokenException;
 import com.myshop.common.Result;
