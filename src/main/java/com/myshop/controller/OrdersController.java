@@ -4,7 +4,9 @@ import cn.dev33.satoken.annotation.SaCheckRole;
 import com.github.pagehelper.PageInfo;
 import com.myshop.common.Result;
 import com.myshop.entity.Orders;
+import com.myshop.entity.User;
 import com.myshop.service.OrdersService;
+import com.myshop.utils.SaUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +42,7 @@ public class OrdersController {
     /**
      * 删除
      */
-    @SaCheckRole("ADMIN")
+
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
         ordersService.deleteById(id);
@@ -50,7 +52,7 @@ public class OrdersController {
     /**
      * 批量删除
      */
-    @SaCheckRole("ADMIN")
+
     @DeleteMapping("/deleteBatch")
     public Result deleteBatch(@RequestBody List<Integer> ids) {
         ordersService.deleteBatch(ids);
@@ -66,6 +68,22 @@ public class OrdersController {
         return Result.success();
     }
 
+    @GetMapping("/selectMyOrders")
+    public Result selectMyOrders(Orders orders,
+                                 @RequestParam(defaultValue = "1") Integer pageNum,
+                                 @RequestParam(defaultValue = "10") Integer pageSize) {
+        // 获取当前登录用户
+        User loginUser = SaUtils.getLoginUser();
+
+        // 如果不是管理员，只能查看自己的订单
+        if (!"ADMIN".equals(loginUser.getRole())) {
+            orders.setUserId(loginUser.getId());
+        }
+
+        // 调用服务查询订单
+        PageInfo<Orders> pageInfo = ordersService.selectPage(orders, pageNum, pageSize);
+        return Result.success(pageInfo);
+    }
     /**
      * 单个查询
      */
@@ -88,12 +106,39 @@ public class OrdersController {
     /**
      * 分页查询
      */
-    @SaCheckRole("ADMIN")
     @GetMapping("/selectPage")
     public Result selectPage(Orders orders,
                              @RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "10") Integer pageSize) {
+        // 获取当前登录用户
+        User loginUser = SaUtils.getLoginUser();
+        
+        // 如果不是管理员，只能查看自己的订单
+        if (!"ADMIN".equals(loginUser.getRole())) {
+            orders.setUserId(loginUser.getId());
+        }
+        
         PageInfo<Orders> pageInfo = ordersService.selectPage(orders, pageNum, pageSize);
+        return Result.success(pageInfo);
+    }
+
+    /**
+     * 根据用户ID查询订单
+     */
+    @GetMapping("/selectByUserId/{userId}")
+    public Result selectByUserId(@PathVariable Integer userId) {
+        List<Orders> list = ordersService.selectByUserId(userId);
+        return Result.success(list);
+    }
+
+    /**
+     * 根据用户ID分页查询订单
+     */
+    @GetMapping("/selectPageByUserId/{userId}")
+    public Result selectPageByUserId(@PathVariable Integer userId,
+                                    @RequestParam(defaultValue = "1") Integer pageNum,
+                                    @RequestParam(defaultValue = "10") Integer pageSize) {
+        PageInfo<Orders> pageInfo = ordersService.selectPageByUserId(userId, pageNum, pageSize);
         return Result.success(pageInfo);
     }
 

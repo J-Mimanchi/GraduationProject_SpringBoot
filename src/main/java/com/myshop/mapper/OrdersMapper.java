@@ -38,5 +38,11 @@ public interface OrdersMapper {
     @Select("select * from orders where status = #{status}")
     List<Orders> selectByStatus(String status);
 
+    /**
+     * 根据用户ID查询订单
+     */
+    @Select("select * from orders where user_id = #{userId} order by create_time desc")
+    List<Orders> selectByUserId(Integer userId);
+
     List<Orders> selectAllGroup(Orders orders);
 }

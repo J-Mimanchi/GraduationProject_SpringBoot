@@ -39,6 +39,12 @@ public class Orders {
     private String type;
     /** 正在拼团的订单ID */
     private Integer groupOrderId;
+    /** 收货人姓名 */
+    private String receiverName;
+    /** 收货人手机号 */
+    private String receiverPhone;
+    /** 收货地址 */
+    private String receiverAddress;
 
     private String userName;
     private String userAvatar;

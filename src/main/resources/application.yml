@@ -69,6 +69,6 @@ alipay:
   #支付宝公钥
   alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk3Ot4c2YPeS23qDja6W4L7SWyMxfMKGm5N+Ha0iJlRehc1mjgwtfqOn0I6OIjhITdK/jaO+8gE4Wxfzsan4EgEXsaeJO8Hg6BV06mPM9INQXlo2t2pHRWatz+raiJ+ge1HxoxODva7ratn1fqvLqoG9CkDIzN+NHxdX+y9bQs/DiEShGWoJpYu7ipHpDuTsqz6x0ES/xWviuA3fdmN1S5g+ydrzDlgiVL6SjM/uOHhdOZ8HuJ82SnLi4Y20wlvsZr2COx3dcmDukZzNCbg31b53AZ4dlApHTHDMZ7oUe5piOXG1RRWc8Ohhth8w9QPkxCBD3XN1ZYuVq3eeQD086xQIDAQAB
   #本地回调地址 必须是公网地址
-  notifyUrl: http://tu2rj6.natappfree.cc/alipay/notify
+  notifyUrl: http://iddbi4.natappfree.cc/alipay/notify
 
 

@@ -9,6 +9,7 @@
         left join user on orders.user_id = user.id
         <where>
             <if test="orderNo != null">and orders.order_no = #{orderNo}</if>
+            <if test="userId != null">and orders.user_id = #{userId}</if>
         </where>
         order by orders.id desc
     </select>
@@ -21,7 +22,11 @@
     </select>
 
     <select id="selectById" resultType="com.myshop.entity.Orders">
-        select * from orders where id = #{id}
+        select orders.id, orders.goods_id, orders.goods_name, orders.goods_img, orders.goods_price, 
+               orders.num, orders.total, orders.order_no, orders.user_id, orders.create_time, 
+               orders.pay_no, orders.pay_time, orders.status, orders.type, orders.group_order_id,
+               orders.receiver_name, orders.receiver_phone, orders.receiver_address
+        from orders where id = #{id}
     </select>
 
     <insert id="insert" parameterType="com.myshop.entity.Orders" useGeneratedKeys="true" keyProperty="id">
@@ -42,6 +47,9 @@
             <if test="status != null">status,</if>
             <if test="type != null">type,</if>
             <if test="groupOrderId != null">group_order_id,</if>
+            <if test="receiverName != null">receiver_name,</if>
+            <if test="receiverPhone != null">receiver_phone,</if>
+            <if test="receiverAddress != null">receiver_address,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -59,6 +67,9 @@
             <if test="status != null">#{status},</if>
             <if test="type != null">#{type},</if>
             <if test="groupOrderId != null">#{groupOrderId},</if>
+            <if test="receiverName != null">#{receiverName},</if>
+            <if test="receiverPhone != null">#{receiverPhone},</if>
+            <if test="receiverAddress != null">#{receiverAddress},</if>
         </trim>
     </insert>
 
@@ -110,6 +121,15 @@
             </if>
             <if test="groupOrderId != null">
                 group_order_id = #{groupOrderId},
+            </if>
+            <if test="receiverName != null">
+                receiver_name = #{receiverName},
+            </if>
+            <if test="receiverPhone != null">
+                receiver_phone = #{receiverPhone},
+            </if>
+            <if test="receiverAddress != null">
+                receiver_address = #{receiverAddress},
             </if>
         </set>
         where id = #{id}

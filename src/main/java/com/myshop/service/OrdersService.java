@@ -263,6 +263,28 @@ public class OrdersService implements InitializingBean {
     }
 
     /**
+     * 根据用户ID查询订单
+     * @param userId 用户ID
+     * @return 订单列表
+     */
+    public List<Orders> selectByUserId(Integer userId) {
+        return ordersMapper.selectByUserId(userId);
+    }
+
+    /**
+     * 根据用户ID分页查询订单
+     * @param userId 用户ID
+     * @param pageNum 页码
+     * @param pageSize 每页大小
+     * @return 分页订单信息
+     */
+    public PageInfo<Orders> selectPageByUserId(Integer userId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Orders> list = ordersMapper.selectByUserId(userId);
+        return PageInfo.of(list);
+    }
+
+    /**
      * 取消团购订单
      * 发起退款
      * 更改状态为已取消
